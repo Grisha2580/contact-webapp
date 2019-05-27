@@ -3,31 +3,41 @@ import logo from './logo.svg';
 import './App.css';
 import Authorization from './Authorization.js';
 import Alert from 'react-bootstrap/Alert';
-
+import Chat from "./Chat";
 
 
 class App extends React.Component {
   state = {
-    input: ''
-  }
- handleSubmitClick = input => {
-   input.preventDefault();
-   const form = this.tartget
-   console.log(input.target.formBasicEmail.value)
-   this.setState({input: 'heeeeelo'})
+      username: '',
+      started: false
+  };
 
-  }
+  changeUsername = event => {
+      this.setState({username: event.target.value})
+  };
 
-  render( ) {
-    const {input} = this.state
+  start_game = () => {
+    this.setState({started: true})
+  };
+
+
+
+
+  render() {
+    const {started, username} = this.state;
+
+    const initScreen = <div><input type="text" placeholder="Username" value={this.state.username} onChange={this.changeUsername}/>
+        <button onClick={this.start_game}>Start game</button>
+        </div>;
+
+    const chatScreen = <Chat username={username}/>;
+
     return (
       <div>
-        <Authorization onClick={this.handleSubmitClick}/>
-        <p> Here is our input {input} </p>
+          {started ? chatScreen : initScreen}
       </div>
     );
   }
-
 
 }
 
